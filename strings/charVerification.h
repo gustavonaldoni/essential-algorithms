@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-bool LetterExistsInString(char*, char);
+bool LetterExistsInString(char *, char);
 
-bool LetterExistsInString(char* string, char letter)
+bool LetterExistsInString(char *string, char letter)
 {
     int i;
 
