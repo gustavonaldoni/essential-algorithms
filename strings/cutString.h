@@ -1,8 +1,8 @@
 #include <string.h>
 
-void CutString(char *, char *, int, int);
+void StringCut(char *, char *, int, int);
 
-void CutString(char *string, char *result, int init, int end)
+void StringCut(char *string, char *result, int init, int end)
 {
     int i, j;
     int resSize = end - init + 1;
