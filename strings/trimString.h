@@ -13,39 +13,36 @@ void StringTrim(char* string, char* result)
     
     init = 0;
     end = strlen(string);
-    control = true;
     
     for(i = 0; i < strlen(string); i++)
     {
-        if (control == true)
+        printf("init = %d\n", init);
+        if (string[i] == ' ')
         {
-            if (string[i] == ' ')
-            {
-                init += 1;
-            }
+            init++;
+        }
         
-            else
-            {
-                control = false;
-            }
+        else
+        {
+            break;
         }
         
     }
     
     for(i = strlen(string); i >= 0; i--)
     {
-        if (control == true)
+        printf("end = %d\n", end);
+        if (string[i] == ' ')
         {
-            if (string[i] == ' ')
-            {
-                end -= 1;
-            }
-        
-            else
-            {
-                control = false;
-            }
+            end--;
         }
+        
+        else
+        {
+            break;
+        }
+        
+        
     }
     
     StringCut(string, result, init, end);
