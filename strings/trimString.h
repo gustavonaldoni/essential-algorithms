@@ -9,40 +9,24 @@ void StringTrim(char* string, char* result)
 {
     int i;
     int init, end;
-    bool control;
     
     init = 0;
-    end = strlen(string);
+    end = strlen(string)-1;
     
-    for(i = 0; i < strlen(string); i++)
+    for(i = 0; i < strlen(string) + 1; i++)
     {
-        printf("init = %d\n", init);
         if (string[i] == ' ')
-        {
             init++;
-        }
-        
         else
-        {
             break;
-        }
-        
     }
     
-    for(i = strlen(string); i >= 0; i--)
+    for (i = strlen(string)-1; i >= 0; i--)
     {
-        printf("end = %d\n", end);
-        if (string[i] == ' ')
-        {
+        if(string[i] == ' ')
             end--;
-        }
-        
         else
-        {
             break;
-        }
-        
-        
     }
     
     StringCut(string, result, init, end);
