@@ -116,3 +116,25 @@ bool MatrixIsEqual(int rowMatrix1, int colMatrix1, int matrix1[rowMatrix1][colMa
 
     return true;
 }
+
+bool MatrixIsIdentity(int r, int c, int matrix[r][c])
+{
+    int i, j;
+
+    if (r != c)
+        return false;
+
+    i = 0;
+    j = 0;
+
+    while (i < r)
+    {
+        if (matrix[i][j] != 1)
+            return false;
+
+        i++;
+        j++;
+    }
+
+    return true;
+}
