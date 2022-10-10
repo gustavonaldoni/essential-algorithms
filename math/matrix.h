@@ -31,15 +31,17 @@ void MatrixConstantMultiply(int constant, int r, int c, int matrix[r][c])
     }
 }
 
-void MatrixSum(int rowRes, int colRes, int matrixRes[rowRes][colRes],
+bool MatrixSum(int rowRes, int colRes, int matrixRes[rowRes][colRes],
                int rowMatrix1, int colMatrix1, int matrix1[rowMatrix1][colMatrix1], 
                int rowMatrix2, int colMatrix2, int matrix2[rowMatrix2][colMatrix2])
 {
     int i, j;
 
-    if (rowMatrix1 != rowMatrix2 || colMatrix1 != colMatrix2)
+    if (rowMatrix1 != rowMatrix2 || colMatrix1 != colMatrix2 || 
+        rowRes != rowMatrix1 || rowRes != rowMatrix2 ||
+        colRes != colMatrix1 || colRes != colMatrix2)
     {
-        return;
+        return false;
     }
 
     for (i = 0; i < rowRes; i++)
@@ -49,4 +51,6 @@ void MatrixSum(int rowRes, int colRes, int matrixRes[rowRes][colRes],
             matrixRes[i][j] = matrix1[i][j] + matrix2[i][j];
         }
     }
+
+    return true;
 }
