@@ -96,3 +96,23 @@ bool MatrixMultiply(int rowRes, int colRes, int matrixRes[rowRes][colRes],
 
     return true;
 }
+
+bool MatrixIsEqual(int rowMatrix1, int colMatrix1, int matrix1[rowMatrix1][colMatrix1],
+                   int rowMatrix2, int colMatrix2, int matrix2[rowMatrix2][colMatrix2])
+{
+    int i, j;
+
+    if (rowMatrix1 != rowMatrix2 || colMatrix1 != colMatrix2)
+        return false;
+
+    for (i = 0; i < rowMatrix1; i++)
+    {
+        for (j = 0; j < colMatrix1; j++)
+        {
+            if (matrix1[i][j] != matrix2[i][j])
+                return false;
+        }
+    }
+
+    return true;
+}
