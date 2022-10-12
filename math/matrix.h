@@ -1,6 +1,16 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+void MatrixZero(int r, int c, int (*matrix)[*]);
+void MatrixPrint(int r, int c, int (*matrix)[*]);
+void MatrixConstantMultiply(int constant, int r, int c, int (*matrix)[*]);
+bool MatrixSum(int rowRes, int colRes, int (*matrixRes)[*], int rowMatrix1, int colMatrix1, int (*matrix1)[*], int rowMatrix2, int colMatrix2, int (*matrix2)[*]);
+bool MatrixMultiply(int rowRes, int colRes, int (*matrixRes)[*], int rowMatrix1, int colMatrix1, int (*matrix1)[*], int rowMatrix2, int colMatrix2, int (*matrix2)[*]);
+bool MatrixIsEqual(int rowMatrix1, int colMatrix1, int (*matrix1)[*], int rowMatrix2, int colMatrix2, int (*matrix2)[*]);
+bool MatrixIsIdentity(int r, int c, int (*matrix)[*]);
+void MatrixGetIdentity(int size, int (*matrix)[*]);
+bool MatrixCopy(int rowRes, int colRes, int matrixRes[rowRes][colRes], int row, int col, int matrix[row][col]);
+
 void MatrixZero(int r, int c, int matrix[r][c])
 {
     int i, j;
@@ -134,6 +144,41 @@ bool MatrixIsIdentity(int r, int c, int matrix[r][c])
 
         i++;
         j++;
+    }
+
+    return true;
+}
+
+void MatrixGetIdentity(int size, int matrix[size][size])
+{
+    int i, j;
+
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size; j++)
+        {
+            if (i == j)
+                matrix[i][j] = 1;
+            else
+                matrix[i][j] = 0;
+        }
+    }
+}
+
+bool MatrixCopy(int rowRes, int colRes, int matrixRes[rowRes][colRes],
+                int row, int col, int matrix[row][col])
+{
+    int i, j;
+
+    if (rowRes != row || colRes != col)
+        return false;
+
+    for (i = 0; i < row; i++)
+    {
+        for (j = 0; j < col; j++)
+        {
+            matrixRes[i][j] = matrix[i][j];
+        }
     }
 
     return true;
