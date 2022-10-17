@@ -1,8 +1,8 @@
 #include <string.h>
 
-int StringFind(char *, char);
+int StringFindChar(char *, char);
 
-int StringFind(char *string, char letter)
+int StringFindChar(char *string, char letter)
 {
     int i;
 
