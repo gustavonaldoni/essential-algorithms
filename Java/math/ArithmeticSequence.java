@@ -1,8 +1,8 @@
-public class ArithmeticProgression {
+public class ArithmeticSequence {
     float firstTerm;
     float commonDifference;
 
-    public ArithmeticProgression(float firstTerm, float commonDifference) {
+    public ArithmeticSequence(float firstTerm, float commonDifference) {
         this.firstTerm = firstTerm;
         this.commonDifference = commonDifference;
     }
