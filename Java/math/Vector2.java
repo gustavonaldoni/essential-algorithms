@@ -57,4 +57,29 @@ public class Vector2 {
             }
         }
     }
+
+    public void addVector2(Vector2 vector2) {
+        this.vx += vector2.vx;
+        this.vy += vector2.vy;
+    }
+
+    public void addNumber(double number) {
+        this.vx += number;
+        this.vy += number;
+    }
+
+    public void addNumbers(double numberVx, double numberVy) {
+        this.vx += numberVx;
+        this.vy += numberVy;
+    }
+
+    public void multiplyNumber(double number) {
+        this.vx *= number;
+        this.vy *= number;
+    }
+
+    public void multiplyNumbers(double numberVx, double numberVy) {
+        this.vx *= numberVx;
+        this.vy *= numberVy;
+    }
 }
