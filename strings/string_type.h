@@ -1,6 +1,5 @@
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 typedef struct
 {
@@ -8,7 +7,8 @@ typedef struct
 } String;
 
 String StringCreate(char *);
-bool StringDestroy(String);
+int StringDestroy(String);
+int StringConcat(String, String);
 
 String StringCreate(char *string)
 {
@@ -18,6 +18,12 @@ String StringCreate(char *string)
 
     length = strlen(string);
     content = (char *)malloc(length);
+
+    if (content == NULL)
+    {
+        result.content = NULL;
+        return result;
+    }
 
     for (i = 0; i < length; i++)
     {
@@ -31,15 +37,46 @@ String StringCreate(char *string)
     return result;
 }
 
-bool StringDestroy(String string)
+int StringDestroy(String string)
 {
     char *aux;
 
     aux = string.content;
 
     if (aux == NULL)
-        return false;
+        return 0;
 
     free(aux);
-    return true;
+    return 1;
+}
+
+int StringConcat(String source, String destination)
+{
+    size_t lengthSource, lengthDestination, lengthResult, i;
+    char *resultContent, *auxDestination;
+
+    lengthSource = strlen(source.content);
+    lengthDestination = strlen(destination.content);
+    lengthResult = lengthSource + lengthDestination;
+
+    resultContent = (char *)malloc(lengthResult);
+
+    if (resultContent == NULL)
+        return 0;
+    
+    for (i = 0; i < lengthResult; i++)
+    {
+        if (i < lengthDestination)
+           resultContent[i] = destination.content[i]; 
+        
+        else
+            resultContent[i] = source.content[i-lengthDestination]; 
+    }
+    
+    resultContent[lengthResult] = '\0';
+    printf("%s", resultContent);
+    
+    //destination.content = resultContent;
+
+    return 1;
 }
