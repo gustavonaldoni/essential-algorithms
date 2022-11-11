@@ -1,6 +1,3 @@
-// Online C compiler to run C program online
-
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -88,7 +85,7 @@ String StringConcat(String source, String destination)
 
 String StringReplace(String original, String toReplace, String replaceBy)
 {
-    size_t lengthOriginal, lengthToReplace, lengthReplaceBy, lengthResultString, i, j;
+    size_t lengthOriginal, lengthToReplace, lengthReplaceBy, lengthResultString, i, j, d;
     String resultString;
     char *resultContent;
     unsigned short int counter, foundWord;
@@ -107,20 +104,11 @@ String StringReplace(String original, String toReplace, String replaceBy)
     lengthOriginal = strlen(original.content);
     lengthReplaceBy = strlen(replaceBy.content);
 
-    printf("lengthToReplace = %zu\n", lengthToReplace);
-    printf("lengthOriginal = %zu\n", lengthOriginal);
-    printf("lengthReplaceBy = %zu\n\n", lengthReplaceBy);
-
     j = 0;
 
     // Verify where, at 'original', we have the string 'toReplace'
     for (i = 0; i < lengthOriginal - lengthToReplace + 1; i++)
     {
-
-        printf("counter = %d\n", counter);
-        printf("original.content[%d] = %c\n", i, original.content[i]);
-        printf("toReplace.content[%d] = %c\n\n", j, toReplace.content[j]);
-
         if (original.content[i] != toReplace.content[j])
         {
             counter = 0;
@@ -136,7 +124,6 @@ String StringReplace(String original, String toReplace, String replaceBy)
 
         if (counter == lengthToReplace)
         {
-            printf("counter = %d\n", counter);
             lastLetterIndex = i;
             foundWord = 1;
             break;
@@ -148,20 +135,55 @@ String StringReplace(String original, String toReplace, String replaceBy)
     if (foundWord == 1)
     {
         firstLetterIndex = lastLetterIndex - lengthToReplace + 1;
-        lengthResultString = lengthOriginal + (lengthReplaceBy - lengthToReplace);
-
-        resultContent = (char *)malloc(lengthResultString);
-
-        for (i = 0; i < lengthResultString; i++)
+        
+        if (lengthReplaceBy == lengthToReplace)
         {
-            if (i >= firstLetterIndex && i <= lastLetterIndex + (lengthReplaceBy - lengthToReplace))
+            lengthResultString = lengthOriginal + (lengthReplaceBy - lengthToReplace);
+            
+            resultContent = (char *)malloc(lengthResultString);
+            
+            for (i = 0; i < lengthResultString; i++)
             {
-                resultContent[i] = replaceBy.content[j];
-                j += 1;
-            }
+                if (i >= firstLetterIndex && i <= lastLetterIndex)
+                {
+                    resultContent[i] = replaceBy.content[j];
+                    j += 1;
+                }
 
-            else
-                resultContent[i] = original.content[i];
+                else
+                    resultContent[i] = original.content[i];
+            }
+        }
+
+        else if (lengthReplaceBy > lengthToReplace)
+        {
+            d = lengthReplaceBy - lengthToReplace;
+            lengthResultString = lengthOriginal + d;
+            
+            resultContent = (char *)malloc(lengthResultString);
+            
+            for (i = 0; i < lengthResultString; i++)
+            {
+                if (i >= firstLetterIndex && i <= lastLetterIndex + d)
+                {
+                    resultContent[i] = replaceBy.content[j];
+                    j += 1;
+                }
+                
+                else
+                {
+                    if (i > lastLetterIndex)
+                        resultContent[i] = original.content[i - d];
+                        
+                    else if (i < firstLetterIndex)
+                        resultContent[i] = original.content[i];
+                }
+            }
+        }
+
+        else
+        {
+           
         }
 
         resultContent[lengthResultString] = '\0';
