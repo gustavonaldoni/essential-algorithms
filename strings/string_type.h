@@ -1,3 +1,6 @@
+// Online C compiler to run C program online
+
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -64,16 +67,16 @@ String StringConcat(String source, String destination)
 
     if (resultContent == NULL)
         return;
-    
+
     for (i = 0; i < lengthResult; i++)
     {
         if (i < lengthDestination)
-           resultContent[i] = destination.content[i]; 
-        
+            resultContent[i] = destination.content[i];
+
         else
-            resultContent[i] = source.content[i-lengthDestination]; 
+            resultContent[i] = source.content[i - lengthDestination];
     }
-    
+
     resultContent[lengthResult] = '\0';
 
     resultString = StringCreate(resultContent);
@@ -92,53 +95,70 @@ String StringReplace(String original, String toReplace, String replaceBy)
     short int firstLetterIndex, lastLetterIndex;
 
     resultString.content = NULL;
+    resultContent = NULL;
 
-    counter = 0; 
+    counter = 0;
     foundWord = 0;
 
-    firstLetterIndex = -1; 
+    firstLetterIndex = -1;
     lastLetterIndex = -1;
 
     lengthToReplace = strlen(toReplace.content);
     lengthOriginal = strlen(original.content);
-    
+    lengthReplaceBy = strlen(replaceBy.content);
+
+    printf("lengthToReplace = %zu\n", lengthToReplace);
+    printf("lengthOriginal = %zu\n", lengthOriginal);
+    printf("lengthReplaceBy = %zu\n\n", lengthReplaceBy);
+
     j = 0;
 
     // Verify where, at 'original', we have the string 'toReplace'
     for (i = 0; i < lengthOriginal - lengthToReplace + 1; i++)
     {
-        if (original.content[i] == toReplace.content[j])
+
+        printf("counter = %d\n", counter);
+        printf("original.content[%d] = %c\n", i, original.content[i]);
+        printf("toReplace.content[%d] = %c\n\n", j, toReplace.content[j]);
+
+        if (original.content[i] != toReplace.content[j])
+        {
+            counter = 0;
+            j = 0;
+            continue;
+        }
+
+        else if (original.content[i] == toReplace.content[j])
         {
             counter += 1;
             j += 1;
         }
-            
+
         if (counter == lengthToReplace)
         {
+            printf("counter = %d\n", counter);
             lastLetterIndex = i;
             foundWord = 1;
             break;
         }
-            
-        if (original.content[i] != toReplace.content[i])
-        {
-            counter = 0; 
-            j = 0;
-        }
-                 
     }
 
-    if (foundWord)
+    j = 0;
+
+    if (foundWord == 1)
     {
         firstLetterIndex = lastLetterIndex - lengthToReplace + 1;
-        lengthResultString = lengthOriginal + (lengthToReplace - lengthReplaceBy);
+        lengthResultString = lengthOriginal + (lengthReplaceBy - lengthToReplace);
 
-        resultContent = (char *) malloc(lengthResultString);
+        resultContent = (char *)malloc(lengthResultString);
 
         for (i = 0; i < lengthResultString; i++)
         {
-            if (i >= firstLetterIndex && i <= lastLetterIndex)
-                resultContent[i] = replaceBy.content[i];
+            if (i >= firstLetterIndex && i <= lastLetterIndex + (lengthReplaceBy - lengthToReplace))
+            {
+                resultContent[i] = replaceBy.content[j];
+                j += 1;
+            }
 
             else
                 resultContent[i] = original.content[i];
@@ -146,6 +166,8 @@ String StringReplace(String original, String toReplace, String replaceBy)
 
         resultContent[lengthResultString] = '\0';
         resultString = StringCreate(resultContent);
+
+        free(resultContent);
     }
 
     return resultString;
