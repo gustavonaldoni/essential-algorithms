@@ -8,7 +8,7 @@ typedef struct
 
 String StringCreate(char *);
 int StringDestroy(String);
-int StringConcat(String, String);
+String StringConcat(String, String);
 
 String StringCreate(char *string)
 {
@@ -50,9 +50,10 @@ int StringDestroy(String string)
     return 1;
 }
 
-int StringConcat(String source, String destination)
+String StringConcat(String source, String destination)
 {
     size_t lengthSource, lengthDestination, lengthResult, i;
+    String resultString;
     char *resultContent, *auxDestination;
 
     lengthSource = strlen(source.content);
@@ -62,7 +63,7 @@ int StringConcat(String source, String destination)
     resultContent = (char *)malloc(lengthResult);
 
     if (resultContent == NULL)
-        return 0;
+        return;
     
     for (i = 0; i < lengthResult; i++)
     {
@@ -74,9 +75,8 @@ int StringConcat(String source, String destination)
     }
     
     resultContent[lengthResult] = '\0';
-    printf("%s", resultContent);
-    
-    //destination.content = resultContent;
 
-    return 1;
+    resultString = StringCreate(resultContent);
+
+    return resultString;
 }
