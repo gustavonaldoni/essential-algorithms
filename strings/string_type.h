@@ -85,11 +85,11 @@ String StringConcat(String source, String destination)
 
 String StringReplace(String original, String toReplace, String replaceBy)
 {
-    size_t lengthOriginal, lengthToReplace, lengthReplaceBy, lengthResultString, i, j, d;
+    size_t lengthOriginal, lengthToReplace, lengthReplaceBy, lengthResult, i, j, d;
     String resultString;
     char *resultContent;
-    unsigned short int counter, foundWord;
-    short int firstLetterIndex, lastLetterIndex;
+    int counter, foundWord;
+    int firstLetterIndex, lastLetterIndex;
 
     resultString.content = NULL;
     resultContent = NULL;
@@ -103,6 +103,8 @@ String StringReplace(String original, String toReplace, String replaceBy)
     lengthToReplace = strlen(toReplace.content);
     lengthOriginal = strlen(original.content);
     lengthReplaceBy = strlen(replaceBy.content);
+
+    lengthResult = 0;
 
     j = 0;
 
@@ -138,11 +140,11 @@ String StringReplace(String original, String toReplace, String replaceBy)
         
         if (lengthReplaceBy == lengthToReplace)
         {
-            lengthResultString = lengthOriginal + (lengthReplaceBy - lengthToReplace);
+            lengthResult = lengthOriginal + (lengthReplaceBy - lengthToReplace);
             
-            resultContent = (char *)malloc(lengthResultString);
+            resultContent = (char *)malloc(lengthResult);
             
-            for (i = 0; i < lengthResultString; i++)
+            for (i = 0; i < lengthResult; i++)
             {
                 if (i >= firstLetterIndex && i <= lastLetterIndex)
                 {
@@ -155,14 +157,14 @@ String StringReplace(String original, String toReplace, String replaceBy)
             }
         }
 
-        else if (lengthReplaceBy > lengthToReplace)
+        if (lengthReplaceBy > lengthToReplace)
         {
             d = lengthReplaceBy - lengthToReplace;
-            lengthResultString = lengthOriginal + d;
+            lengthResult = lengthOriginal + d;
             
-            resultContent = (char *)malloc(lengthResultString);
+            resultContent = (char *)malloc(lengthResult);
             
-            for (i = 0; i < lengthResultString; i++)
+            for (i = 0; i < lengthResult; i++)
             {
                 if (i >= firstLetterIndex && i <= lastLetterIndex + d)
                 {
@@ -181,12 +183,33 @@ String StringReplace(String original, String toReplace, String replaceBy)
             }
         }
 
-        else
+        if (lengthReplaceBy < lengthToReplace)
         {
-           
+            d = lengthToReplace - lengthReplaceBy;
+            lengthResult = lengthOriginal - d;
+            
+            resultContent = (char *)malloc(lengthResult);
+            
+            for (i = 0; i < lengthResult; i++)
+            {
+                if (i >= firstLetterIndex && i <= lastLetterIndex - d)
+                {
+                    resultContent[i] = replaceBy.content[j];
+                    j += 1;
+                }
+                
+                else
+                {
+                    if (i < firstLetterIndex)
+                        resultContent[i] = original.content[i];
+                
+                    else
+                        resultContent[i] = original.content[i + d];
+                }
+            }
         }
 
-        resultContent[lengthResultString] = '\0';
+        resultContent[lengthResult] = '\0';
         resultString = StringCreate(resultContent);
 
         free(resultContent);
