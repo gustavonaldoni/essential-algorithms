@@ -13,6 +13,7 @@ String stringConcat(String, String);
 String stringReplace(String, String, String);
 String stringToLower(String);
 String stringToUpper(String);
+String stringTrim(String);
 
 String stringCreate(char *string)
 {
@@ -24,13 +25,10 @@ String stringCreate(char *string)
     content = NULL;
 
     length = strlen(string);
-    content = (char *)malloc(length);
+    content = (char *)malloc(length + 1);
 
     if (content == NULL)
-    {
-        result.content = NULL;
         return result;
-    }
 
     for (i = 0; i < length; i++)
     {
@@ -70,7 +68,7 @@ String stringConcat(String source, String destination)
     lengthDestination = strlen(destination.content);
     lengthResult = lengthSource + lengthDestination;
 
-    resultContent = (char *)malloc(lengthResult);
+    resultContent = (char *)malloc(lengthResult + 1);
 
     if (resultContent == NULL)
         return;
@@ -152,7 +150,7 @@ String stringReplace(String original, String toReplace, String replaceBy)
         {
             lengthResult = lengthOriginal + (lengthReplaceBy - lengthToReplace);
 
-            resultContent = (char *)malloc(lengthResult);
+            resultContent = (char *)malloc(lengthResult + 1);
 
             for (i = 0; i < lengthResult; i++)
             {
@@ -172,7 +170,7 @@ String stringReplace(String original, String toReplace, String replaceBy)
             d = lengthReplaceBy - lengthToReplace;
             lengthResult = lengthOriginal + d;
 
-            resultContent = (char *)malloc(lengthResult);
+            resultContent = (char *)malloc(lengthResult + 1);
 
             for (i = 0; i < lengthResult; i++)
             {
@@ -198,7 +196,7 @@ String stringReplace(String original, String toReplace, String replaceBy)
             d = lengthToReplace - lengthReplaceBy;
             lengthResult = lengthOriginal - d;
 
-            resultContent = (char *)malloc(lengthResult);
+            resultContent = (char *)malloc(lengthResult + 1);
 
             for (i = 0; i < lengthResult; i++)
             {
@@ -234,12 +232,12 @@ String stringToLower(String original)
     String resultString;
     char *resultContent;
 
-    lengthOriginal = strlen(original.content);
-
     resultString.content = NULL;
     resultContent = NULL;
 
-    resultContent = (char *) malloc(lengthOriginal);
+    lengthOriginal = strlen(original.content);
+
+    resultContent = (char *) malloc(lengthOriginal + 1);
 
     if (resultContent == NULL)
         return;
@@ -252,6 +250,8 @@ String stringToLower(String original)
     resultContent[lengthOriginal] = '\0';
     resultString = stringCreate(resultContent);
 
+    free(resultContent);
+
     return resultString;
 }
 
@@ -261,12 +261,12 @@ String stringToUpper(String original)
     String resultString;
     char *resultContent;
 
-    lengthOriginal = strlen(original.content);
-
     resultString.content = NULL;
     resultContent = NULL;
 
-    resultContent = (char *) malloc(lengthOriginal);
+    lengthOriginal = strlen(original.content);
+
+    resultContent = (char *) malloc(lengthOriginal + 1);
 
     if (resultContent == NULL)
         return;
@@ -278,6 +278,64 @@ String stringToUpper(String original)
 
     resultContent[lengthOriginal] = '\0';
     resultString = stringCreate(resultContent);
+
+    free(resultContent);
+
+    return resultString;
+}
+
+String stringTrim(String original)
+{
+    size_t lengthOriginal, lengthResult, initIndex, endIndex, i;
+    String resultString;
+    char *resultContent;
+
+    resultString.content = NULL;
+    resultContent = NULL;
+
+    initIndex = 0;
+    endIndex = lengthOriginal - 1;
+
+    lengthResult = 0;
+
+    lengthOriginal = strlen(original.content);
+
+    // Finding initIndex
+    for (i = 0; i < lengthOriginal; i++)
+    {
+        if (original.content[i] != ' ')
+        {
+            initIndex = i;
+            break;
+        }    
+    }
+
+    // Finding endIndex
+    for (i = lengthOriginal - 1; i >= 0; i--)
+    {
+        if (original.content[i] != ' ')
+        {
+            endIndex = i;
+            break;
+        }
+    }
+
+    lengthResult = endIndex - initIndex + 1;
+    
+    resultContent = (char *) malloc(lengthResult + 1);
+
+    if (resultContent == NULL)
+        return;
+
+    for (i = 0; i < lengthResult; i++)
+    {
+        resultContent[i] = original.content[i + initIndex];
+    }
+
+    resultContent[lengthResult] = '\0';
+    resultString = stringCreate(resultContent);
+
+    free(resultContent);
 
     return resultString;
 }
