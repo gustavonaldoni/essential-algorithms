@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 typedef struct
 {
@@ -10,12 +11,16 @@ String StringCreate(char *);
 int StringDestroy(String *);
 String StringConcat(String, String);
 String StringReplace(String, String, String);
+String StringToLower(String);
 
 String StringCreate(char *string)
 {
     String result;
     size_t length, i;
     char *content;
+
+    result.content = NULL;
+    content = NULL;
 
     length = strlen(string);
     content = (char *)malloc(length);
@@ -56,6 +61,9 @@ String StringConcat(String source, String destination)
     size_t lengthSource, lengthDestination, lengthResult, i;
     String resultString;
     char *resultContent;
+
+    resultString.content = NULL;
+    resultContent = NULL;
 
     lengthSource = strlen(source.content);
     lengthDestination = strlen(destination.content);
@@ -217,4 +225,29 @@ String StringReplace(String original, String toReplace, String replaceBy)
     }
 
     return resultString;
+}
+
+String StringToLower(String original)
+{
+    size_t lengthOriginal, i;
+    String resultString;
+    char *resultContent;
+
+    lengthOriginal = strlen(original.content);
+
+    resultString.content = NULL;
+    resultContent = NULL;
+
+    resultContent = (char *) malloc(lengthOriginal);
+
+    if (resultContent == NULL)
+        return;
+
+    for (i = 0; i < lengthOriginal; i++)
+    {
+        resultContent[i] = tolower(original.content[i]);
+    }
+
+    resultContent[lengthOriginal] = '\0';
+    resultString = StringCreate(resultContent);
 }
