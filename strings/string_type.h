@@ -7,13 +7,14 @@ typedef struct
     char *content;
 } String;
 
-String StringCreate(char *);
-int StringDestroy(String *);
-String StringConcat(String, String);
-String StringReplace(String, String, String);
-String StringToLower(String);
+String stringCreate(char *);
+int stringDestroy(String *);
+String stringConcat(String, String);
+String stringReplace(String, String, String);
+String stringToLower(String);
+String stringToUpper(String);
 
-String StringCreate(char *string)
+String stringCreate(char *string)
 {
     String result;
     size_t length, i;
@@ -43,7 +44,7 @@ String StringCreate(char *string)
     return result;
 }
 
-int StringDestroy(String *string)
+int stringDestroy(String *string)
 {
     char *aux;
 
@@ -56,7 +57,7 @@ int StringDestroy(String *string)
     return 1;
 }
 
-String StringConcat(String source, String destination)
+String stringConcat(String source, String destination)
 {
     size_t lengthSource, lengthDestination, lengthResult, i;
     String resultString;
@@ -85,14 +86,14 @@ String StringConcat(String source, String destination)
 
     resultContent[lengthResult] = '\0';
 
-    resultString = StringCreate(resultContent);
+    resultString = stringCreate(resultContent);
 
     free(resultContent);
 
     return resultString;
 }
 
-String StringReplace(String original, String toReplace, String replaceBy)
+String stringReplace(String original, String toReplace, String replaceBy)
 {
     size_t lengthOriginal, lengthToReplace, lengthReplaceBy, lengthResult, i, j, d;
     String resultString;
@@ -219,7 +220,7 @@ String StringReplace(String original, String toReplace, String replaceBy)
         }
 
         resultContent[lengthResult] = '\0';
-        resultString = StringCreate(resultContent);
+        resultString = stringCreate(resultContent);
 
         free(resultContent);
     }
@@ -227,7 +228,7 @@ String StringReplace(String original, String toReplace, String replaceBy)
     return resultString;
 }
 
-String StringToLower(String original)
+String stringToLower(String original)
 {
     size_t lengthOriginal, i;
     String resultString;
@@ -249,5 +250,34 @@ String StringToLower(String original)
     }
 
     resultContent[lengthOriginal] = '\0';
-    resultString = StringCreate(resultContent);
+    resultString = stringCreate(resultContent);
+
+    return resultString;
+}
+
+String stringToUpper(String original)
+{
+    size_t lengthOriginal, i;
+    String resultString;
+    char *resultContent;
+
+    lengthOriginal = strlen(original.content);
+
+    resultString.content = NULL;
+    resultContent = NULL;
+
+    resultContent = (char *) malloc(lengthOriginal);
+
+    if (resultContent == NULL)
+        return;
+
+    for (i = 0; i < lengthOriginal; i++)
+    {
+        resultContent[i] = toupper(original.content[i]);
+    }
+
+    resultContent[lengthOriginal] = '\0';
+    resultString = stringCreate(resultContent);
+
+    return resultString;
 }
