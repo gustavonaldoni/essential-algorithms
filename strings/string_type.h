@@ -14,6 +14,7 @@ String stringReplace(String, String, String);
 String stringToLower(String);
 String stringToUpper(String);
 String stringTrim(String);
+int stringContains(String, String);
 
 String stringCreate(char *string)
 {
@@ -338,4 +339,41 @@ String stringTrim(String original)
     free(resultContent);
 
     return resultString;
+}
+
+int stringContains(String original, String substring)
+{
+    size_t lengthOriginal, lengthSubstring, i, j;
+    unsigned int counter;
+
+    lengthOriginal = strlen(original.content);
+    lengthSubstring = strlen(substring.content);
+
+    j = 0;
+    counter = 0;
+    
+    for (i = 0; i < lengthOriginal; i++)
+    {
+        if (original.content[i] == substring.content[0])
+        {
+            counter += 1;
+            
+            for (j = 1; j < lengthSubstring; j++)
+            {
+                if (original.content[i + j] == substring.content[j])
+                    counter += 1;
+                
+                else
+                {
+                    counter = 0;
+                    break;
+                }      
+            }
+        }
+
+        if (counter == lengthSubstring)
+            return 1;
+    }
+
+    return 0;
 }

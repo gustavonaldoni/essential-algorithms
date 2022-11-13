@@ -1,0 +1,4 @@
+original = "texto qualquer" -> lengthOriginal = 14
+	          6  9
+	          
+substring = "qual" -> lengthSubstring = 4
