@@ -143,13 +143,13 @@ String stringReplace(String original, String toReplace, String replaceBy)
 
     j = 0;
 
-    if (foundWord == 1)
+    if (foundWord)
     {
         firstLetterIndex = lastLetterIndex - lengthToReplace + 1;
 
         if (lengthReplaceBy == lengthToReplace)
         {
-            lengthResult = lengthOriginal + (lengthReplaceBy - lengthToReplace);
+            lengthResult = lengthOriginal;
 
             resultContent = (char *)malloc(lengthResult + 1);
 
@@ -238,7 +238,7 @@ String stringToLower(String original)
 
     lengthOriginal = strlen(original.content);
 
-    resultContent = (char *) malloc(lengthOriginal + 1);
+    resultContent = (char *)malloc(lengthOriginal + 1);
 
     if (resultContent == NULL)
         return;
@@ -267,7 +267,7 @@ String stringToUpper(String original)
 
     lengthOriginal = strlen(original.content);
 
-    resultContent = (char *) malloc(lengthOriginal + 1);
+    resultContent = (char *)malloc(lengthOriginal + 1);
 
     if (resultContent == NULL)
         return;
@@ -308,7 +308,7 @@ String stringTrim(String original)
         {
             initIndex = i;
             break;
-        }    
+        }
     }
 
     // Finding endIndex
@@ -322,8 +322,8 @@ String stringTrim(String original)
     }
 
     lengthResult = endIndex - initIndex + 1;
-    
-    resultContent = (char *) malloc(lengthResult + 1);
+
+    resultContent = (char *)malloc(lengthResult + 1);
 
     if (resultContent == NULL)
         return;
@@ -351,23 +351,23 @@ int stringContains(String original, String substring)
 
     j = 0;
     counter = 0;
-    
+
     for (i = 0; i < lengthOriginal; i++)
     {
         if (original.content[i] == substring.content[0])
         {
             counter += 1;
-            
+
             for (j = 1; j < lengthSubstring; j++)
             {
                 if (original.content[i + j] == substring.content[j])
                     counter += 1;
-                
+
                 else
                 {
                     counter = 0;
                     break;
-                }      
+                }
             }
         }
 
