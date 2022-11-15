@@ -15,6 +15,7 @@ String stringToLower(String);
 String stringToUpper(String);
 String stringTrim(String);
 int stringContains(String, String);
+int stringStartsWith(String, char *);
 
 String stringCreate(char *string)
 {
@@ -376,4 +377,23 @@ int stringContains(String original, String substring)
     }
 
     return 0;
+}
+
+int stringStartsWith(String original, char *substring)
+{
+    size_t lengthOriginal, lengthSubstring, i;
+
+    lengthOriginal = strlen(original.content);
+    lengthSubstring = strlen(substring);
+
+    if (lengthSubstring > lengthOriginal)
+        return 0;
+    
+    for (i = 0; i < lengthSubstring; i++)
+    {
+        if (original.content[i] != substring[i])
+            return 0;
+    }
+
+    return 1;
 }
