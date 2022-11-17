@@ -9,6 +9,7 @@ typedef struct
 
 String stringCreate(char *);
 int stringDestroy(String *);
+size_t stringLength(String);
 String stringConcat(String, String);
 String stringReplace(String, String, String);
 String stringToLower(String);
@@ -57,6 +58,20 @@ int stringDestroy(String *string)
     return 1;
 }
 
+size_t stringLength(String string)
+{
+    size_t i;
+
+    i = 0;
+
+    while (string.content[i] != '\0')
+    {
+        i++;
+    }
+
+    return i;
+}
+
 String stringConcat(String source, String destination)
 {
     size_t lengthSource, lengthDestination, lengthResult, i;
@@ -66,8 +81,8 @@ String stringConcat(String source, String destination)
     resultString.content = NULL;
     resultContent = NULL;
 
-    lengthSource = strlen(source.content);
-    lengthDestination = strlen(destination.content);
+    lengthSource = stringLength(source);
+    lengthDestination = stringLength(destination);
     lengthResult = lengthSource + lengthDestination;
 
     resultContent = (char *)malloc(lengthResult + 1);
@@ -110,9 +125,9 @@ String stringReplace(String original, String toReplace, String replaceBy)
     firstLetterIndex = -1;
     lastLetterIndex = -1;
 
-    lengthToReplace = strlen(toReplace.content);
-    lengthOriginal = strlen(original.content);
-    lengthReplaceBy = strlen(replaceBy.content);
+    lengthToReplace = stringLength(toReplace);
+    lengthOriginal = stringLength(original);
+    lengthReplaceBy = stringLength(replaceBy);
 
     lengthResult = 0;
 
@@ -237,7 +252,7 @@ String stringToLower(String original)
     resultString.content = NULL;
     resultContent = NULL;
 
-    lengthOriginal = strlen(original.content);
+    lengthOriginal = stringLength(original);
 
     resultContent = (char *)malloc(lengthOriginal + 1);
 
@@ -266,7 +281,7 @@ String stringToUpper(String original)
     resultString.content = NULL;
     resultContent = NULL;
 
-    lengthOriginal = strlen(original.content);
+    lengthOriginal = stringLength(original);
 
     resultContent = (char *)malloc(lengthOriginal + 1);
 
@@ -300,7 +315,7 @@ String stringTrim(String original)
 
     lengthResult = 0;
 
-    lengthOriginal = strlen(original.content);
+    lengthOriginal = stringLength(original);
 
     // Finding initIndex
     for (i = 0; i < lengthOriginal; i++)
@@ -347,8 +362,8 @@ int stringContains(String original, String substring)
     size_t lengthOriginal, lengthSubstring, i, j;
     unsigned int counter;
 
-    lengthOriginal = strlen(original.content);
-    lengthSubstring = strlen(substring.content);
+    lengthOriginal = stringLength(original);
+    lengthSubstring = stringLength(substring);
 
     j = 0;
     counter = 0;
@@ -379,19 +394,19 @@ int stringContains(String original, String substring)
     return 0;
 }
 
-int stringStartsWith(String original, char *substring)
+int stringStartsWith(String original, String substring)
 {
     size_t lengthOriginal, lengthSubstring, i;
 
-    lengthOriginal = strlen(original.content);
-    lengthSubstring = strlen(substring);
+    lengthOriginal = stringLength(original);
+    lengthSubstring = stringLength(substring);
 
     if (lengthSubstring > lengthOriginal)
         return 0;
     
     for (i = 0; i < lengthSubstring; i++)
     {
-        if (original.content[i] != substring[i])
+        if (original.content[i] != substring.content[i])
             return 0;
     }
 
